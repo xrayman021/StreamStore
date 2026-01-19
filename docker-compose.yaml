@@ -10,7 +10,7 @@ services:
     environment:
       KAFKA_KRAFT_MODE: 'true'
 
-      CLUSTER_ID: 'SAMPLE_STRING'
+      CLUSTER_ID: '5L6g3nShT-eMCtK--X86sw'
       KAFKA_NODE_ID: 1
 
       KAFKA_PROCESS_ROLES: broker,controller

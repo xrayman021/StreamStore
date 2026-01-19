@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: producer
     depends_on:
       - kafka
     environment:
@@ -16,9 +17,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: tracker
     depends_on:
       - kafka
     environment:
       KAFKA_BOOTSTRAP: "kafka:9092"
     command: ["python", "tracker.py"]
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BOOTSTRAP: "kafka:9092"
+    command: ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     restart: unless-stopped

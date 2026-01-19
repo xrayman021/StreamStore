@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8a350e7-3ee1-4d3f-964a-9a8efa3c3bf6" name="Changes" comment="Created api.py">
-      <change afterPath="$PROJECT_DIR$/ui/index.html" afterDir="false" />
+    <list default="true" id="e8a350e7-3ee1-4d3f-964a-9a8efa3c3bf6" name="Changes" comment="Created ui directory and index.html">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.override.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/producer.py" beforeDir="false" afterPath="$PROJECT_DIR$/producer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ui/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +64,7 @@
     "Docker.docker-compose.yaml.kafka: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yaml: Compose Deployment.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.api.executor": "Run",
     "Python.producer.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -76,7 +81,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Docker.docker-compose.yaml: Compose Deployment">
+  <component name="RunManager" selected="Python.producer">
     <configuration name="producer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StreamStore" />
       <option name="ENV_FILES" value="" />
@@ -129,8 +134,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
         <item itemvalue="Python.producer" />
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yaml.kafka: Compose Deployment" />
       </list>
     </recent_temporary>
@@ -154,7 +159,7 @@
       <workItem from="1768849049062" duration="2276000" />
       <workItem from="1768851423966" duration="638000" />
       <workItem from="1768859403127" duration="1938000" />
-      <workItem from="1768861380260" duration="1861000" />
+      <workItem from="1768861380260" duration="3279000" />
     </task>
     <task id="LOCAL-00001" summary="Created docker-compose.yaml">
       <option name="closed" value="true" />
@@ -236,11 +241,30 @@
       <option name="project" value="LOCAL" />
       <updated>1768863057530</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Created ui directory and index.html">
+      <option name="closed" value="true" />
+      <created>1768863278157</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1768863278157</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created docker-compose.yaml" />
@@ -252,7 +276,8 @@
     <MESSAGE value="Trying AI suggestions for optimization." />
     <MESSAGE value="Created Dockerfile and docker-compose.override.yaml" />
     <MESSAGE value="Created api.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created api.py" />
+    <MESSAGE value="Created ui directory and index.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created ui directory and index.html" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -266,7 +291,8 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/StreamStore$producer.coverage" NAME="producer Coverage Results" MODIFIED="1768860584970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StreamStore$producer.coverage" NAME="producer Coverage Results" MODIFIED="1768864680397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StreamStore$api.coverage" NAME="api Coverage Results" MODIFIED="1768864277617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

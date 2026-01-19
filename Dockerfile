@@ -11,10 +11,11 @@ RUN apt-get update \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 
-# copy both scripts into the image
-COPY producer.py tracker.py /app/
+# copy scripts and UI
+COPY producer.py tracker.py api.py ui/ /app/
 
-RUN pip install --no-cache-dir confluent-kafka
+# install python deps
+RUN pip install --no-cache-dir confluent-kafka fastapi "uvicorn[standard]"
 
-# default command (override per-service in Compose)
+# default (can be overridden by docker-compose)
 CMD ["python", "producer.py"]

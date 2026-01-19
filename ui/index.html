@@ -27,6 +27,22 @@
   <script>
     const form = document.getElementById('orderForm');
     const result = document.getElementById('result');
+
+    async function safeParseResponse(response) {
+      const ct = response.headers.get('content-type') || '';
+      // If JSON content-type, attempt JSON parse with fallback to text
+      if (ct.includes('application/json')) {
+        try {
+          return await response.json();
+        } catch (err) {
+          // malformed JSON: fall back to text
+          return await response.text();
+        }
+      }
+      // not JSON: return plain text
+      return await response.text();
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = {
@@ -41,8 +57,14 @@
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(data)
         });
-        const json = await res.json();
-        result.textContent = JSON.stringify({ status: res.status, body: json }, null, 2);
+
+        const body = await safeParseResponse(res);
+
+        result.textContent = JSON.stringify({
+          status: res.status,
+          ok: res.ok,
+          body
+        }, null, 2);
       } catch (err) {
         result.textContent = 'Error: ' + err.message;
       }

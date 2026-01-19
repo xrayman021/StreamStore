@@ -6,6 +6,7 @@ services:
     image: confluentinc/cp-kafka:7.8.3
     container_name: kafka
     ports:
+      - "29092:29092"
       - "9092:9092"
     restart: unless-stopped
     environment:

@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BOOTSTRAP: "kafka:9092"
+    command: ["python", "producer.py"]
+    restart: unless-stopped
+
+  tracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BOOTSTRAP: "kafka:9092"
+    command: ["python", "tracker.py"]
+    restart: unless-stopped

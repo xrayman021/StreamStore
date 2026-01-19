@@ -16,7 +16,7 @@ class Order(BaseModel):
 
 @app.post("/orders", status_code=202)
 def post_order(order: Order):
-    data = order.dict()
+    data = order.model_dump()
     if not data.get("order_id"):
         data["order_id"] = uuid.uuid4().hex
     try:
@@ -24,6 +24,7 @@ def post_order(order: Order):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     return {"status": "accepted", "order_id": data["order_id"]}
+
 
 @app.get("/", response_class=HTMLResponse)
 def index():

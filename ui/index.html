@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Submit Order</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 600px; }
+    label { display:block; margin-top: 0.5rem; }
+    input, button { padding: 0.5rem; width: 100%; box-sizing: border-box; }
+    button { margin-top: 1rem; }
+    pre { background:#f7f7f7; padding:1rem; }
+  </style>
+</head>
+<body>
+  <h1>Submit Order</h1>
+  <form id="orderForm">
+    <label>User<input name="user" required /></label>
+    <label>Item<input name="item" required /></label>
+    <label>Price<input name="price" type="number" value="100" required /></label>
+    <label>Quantity<input name="quantity" type="number" value="1" required /></label>
+    <button type="submit">Send</button>
+  </form>
+  <h2>Result</h2>
+  <pre id="result">No submission yet.</pre>
+
+  <script>
+    const form = document.getElementById('orderForm');
+    const result = document.getElementById('result');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        user: form.user.value,
+        item: form.item.value,
+        price: Number(form.price.value),
+        quantity: Number(form.quantity.value)
+      };
+      try {
+        const res = await fetch('/orders', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        result.textContent = JSON.stringify({ status: res.status, body: json }, null, 2);
+      } catch (err) {
+        result.textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

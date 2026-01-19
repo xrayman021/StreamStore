@@ -1,33 +1,42 @@
+# python
+import os
 import json
 import uuid
-
+import logging
 from confluent_kafka import Producer
 
+logging.basicConfig(level=logging.INFO)
 producer_config = {
-    'bootstrap.servers': 'localhost:9092',
+    'bootstrap.servers': os.getenv('KAFKA_BOOTSTRAP', 'localhost:9092'),
 }
 
 producer = Producer(producer_config)
 
 def delivery_report(err, msg):
     if err:
-        print(f"Delivery failed: {err}")
+        logging.error("Delivery failed: %s", err)
     else:
-        print(f"Delivered {msg.value().decode('utf-8')}")
-        print(f"Delivered to {msg.topic()}: partition {msg.partition()}: at offset {msg.offset()}")
+        key = msg.key().decode('utf-8') if msg.key() else None
+        logging.info("Delivered key=%s to %s [%d] at offset %d", key, msg.topic(), msg.partition(), msg.offset())
 
-order = {
-    "order_id": str(uuid.uuid4().hex),
-    "user": "chase",
-    "item": "sausage pizza",
-    "quantity": 2
-}
+def send_order(order):
+    value = json.dumps(order).encode('utf-8')
+    key = order.get('order_id')
+    try:
+        producer.produce(topic='orders', key=key, value=value, callback=delivery_report)
+        producer.poll(0)  # serve callbacks
+    except BufferError:
+        logging.warning("Local producer queue full, flushing and retrying")
+        producer.flush()
+        producer.produce(topic='orders', key=key, value=value, callback=delivery_report)
+    producer.flush(timeout=10)
 
-value = json.dumps(order).encode("utf-8")
-
-producer.produce(
-    topic="orders",
-    value=value,
-    callback=delivery_report)
-
-producer.flush()
+if __name__ == '__main__':
+    order = {
+        "order_id": uuid.uuid4().hex,
+        "user": "chase",
+        "item": "sausage pizza",
+        "price": 100,
+        "quantity": 2
+    }
+    send_order(order)

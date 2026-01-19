@@ -1,19 +1,20 @@
+# python
+import os
 import json
-import uuid
+import logging
+from confluent_kafka import Consumer
 
-from confluent_kafka import Consumer, Producer
-
+logging.basicConfig(level=logging.INFO)
 consumer_config = {
-    'bootstrap.servers': 'localhost:9092',
+    'bootstrap.servers': os.getenv('KAFKA_BOOTSTRAP', 'localhost:9092'),
     'group.id': "order-tracker",
     'auto.offset.reset': 'earliest'
 }
 
 consumer = Consumer(consumer_config)
-
 consumer.subscribe(["orders"])
 
-print("Consumer is running and subscribed to topic 'orders'")
+logging.info("Consumer is running and subscribed to topic `orders`")
 
 try:
     while True:
@@ -21,14 +22,17 @@ try:
         if msg is None:
             continue
         if msg.error():
-            print("Consumer error: {}".format(msg.error()))
-
-        value = msg.value().decode('utf-8')
-        order = json.loads(value)
-        print(f"Received order: {order['quantity']} x {order['price']} from {order['user']}")
-
+            logging.error("Consumer error: %s", msg.error())
+            continue
+        try:
+            value = msg.value().decode('utf-8')
+            order = json.loads(value)
+        except Exception:
+            logging.exception("Failed to parse message, skipping")
+            continue
+        logging.info("Received order: %s x %s from %s", order.get('quantity'), order.get('price'), order.get('user'))
+        consumer.commit(asynchronous=False)
 except KeyboardInterrupt:
-    print("Stopping consumer")
-
+    logging.info("Stopping consumer")
 finally:
     consumer.close()
